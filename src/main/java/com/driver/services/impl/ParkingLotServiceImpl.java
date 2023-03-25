@@ -30,11 +30,11 @@ public class ParkingLotServiceImpl implements ParkingLotService{
     public Spot addSpot(int parkingLotId, Integer numberOfWheels, Integer pricePerHour) {
         Spot spot = new Spot();
         // choose spot type
-        if(numberOfWheels == 2){
+        if(numberOfWheels <= 2){
             spot.setSpotType(SpotType.TWO_WHEELER);
-        }else if (numberOfWheels == 4) {
+        }else if (numberOfWheels <= 4) {
             spot.setSpotType(SpotType.FOUR_WHEELER);
-        }else if(numberOfWheels > 4) {
+        }else {
             spot.setSpotType(SpotType.OTHERS);
         }
         // add spot
@@ -50,17 +50,7 @@ public class ParkingLotServiceImpl implements ParkingLotService{
     @Override
     public void deleteSpot(int spotId) {
         // find all records from db
-        List<ParkingLot> parkingLotList = parkingLotRepository1.findAll();
-        // if parkinglot have a F.K i.e = spotId then delete that spot
-        for (ParkingLot parkingLot : parkingLotList){
-            List<Spot> spotList = parkingLot.getSpotList();
-            for (Spot spot : spotList){
-                if(spot.getId() == spotId){
-                    spotRepository1.deleteById(spotId);
-                    return;
-                }
-            }
-        }
+        spotRepository1.deleteById(spotId);
     }
 
     @Override
