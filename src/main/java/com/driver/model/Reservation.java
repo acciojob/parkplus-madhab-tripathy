@@ -14,15 +14,18 @@ public class Reservation {
     @ManyToOne
     @JoinColumn
     User user;
+    @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL)
+    Payment payment;
 
     public Reservation() {
     }
 
-    public Reservation(int id, int numberOfHours, Spot spot, User user) {
+    public Reservation(int id, int numberOfHours, Spot spot, User user, Payment payment) {
         this.id = id;
         this.numberOfHours = numberOfHours;
         this.spot = spot;
         this.user = user;
+        this.payment = payment;
     }
 
     public int getId() {
@@ -57,4 +60,11 @@ public class Reservation {
         this.user = user;
     }
 
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
 }
