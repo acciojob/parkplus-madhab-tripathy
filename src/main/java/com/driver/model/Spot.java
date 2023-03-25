@@ -1,7 +1,7 @@
 package com.driver.model;
 
 import java.util.List;
-
+import java.util.ArrayList;
 import javax.persistence.*;
 
 @Entity
@@ -17,7 +17,7 @@ public class Spot {
     @JoinColumn
     ParkingLot parkingLot;
     @OneToMany(mappedBy = "spot", cascade = CascadeType.ALL)
-    List<Reservation> reservationList;
+    List<Reservation> reservationList = new ArrayList<>();
 
     public Spot(){}
 
