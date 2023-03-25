@@ -21,6 +21,7 @@ public class PaymentServiceImpl implements PaymentService {
         Reservation reservation;
         Spot spot;
         int bill;
+        mode = mode.toUpperCase();
         //If the amountSent is less than bill, throw "Insufficient Amount" exception, otherwise update payment attributes
         try {
             reservation = reservationRepository2.findById(reservationId).get();
