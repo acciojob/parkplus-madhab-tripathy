@@ -37,7 +37,15 @@ public class PaymentServiceImpl implements PaymentService {
         //If the mode contains a string other than "cash", "card", or "upi" (any character in uppercase or lowercase),
         // throw "Payment mode not detected" exception.
         try {
-            PaymentMode.valueOf(mode);
+            if(!PaymentMode.valueOf("CASH").equals(PaymentMode.valueOf(mode))){
+                throw new Exception();
+            }
+            if(!PaymentMode.valueOf("UPI").equals(PaymentMode.valueOf(mode))){
+                throw new Exception();
+            }
+            if(!PaymentMode.valueOf("CARD").equals(PaymentMode.valueOf(mode))){
+                throw new Exception();
+            }
         }catch (Exception e){
             payment.setPaymentCompleted(false);
             paymentRepository2.save(payment);
