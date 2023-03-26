@@ -21,9 +21,9 @@ public class ReservationServiceImpl implements ReservationService {
     @Autowired
     ParkingLotRepository parkingLotRepository3;
     private int getWheelerType(SpotType spotType){
-        if(spotType == SpotType.TWO_WHEELER){
+        if(spotType.equals(SpotType.TWO_WHEELER)){
             return 2;
-        } else if (spotType == SpotType.FOUR_WHEELER) {
+        } else if (spotType.equals(SpotType.FOUR_WHEELER)) {
             return 4;
         }
         return Integer.MAX_VALUE;
@@ -48,12 +48,11 @@ public class ReservationServiceImpl implements ReservationService {
                 int wheels = getWheelerType(spot1.getSpotType());
                 if(!spot1.getOccupied() && spot1.getPricePerHour() < totalPrice && wheels >= numberOfWheels){
                     totalPrice = spot1.getPricePerHour();
-                    spot1.setOccupied(true);
                     bookedSpot = spot1;
                     isSpotAvailable = true;
                 }
             }
-            if(!isSpotAvailable){
+            if(!isSpotAvailable ){
                 throw new Exception();
             }
         }
@@ -61,14 +60,18 @@ public class ReservationServiceImpl implements ReservationService {
             throw new Exception("Cannot make reservation");
         }
 
+        bookedSpot.setOccupied(true);
+
         reservation.setNumberOfHours(timeInHours);
         reservation.setSpot(bookedSpot);
         reservation.setUser(user);
-        user.getReservationList().add(reservation);
+
         bookedSpot.getReservationList().add(reservation);
+        user.getReservationList().add(reservation);
 
         userRepository3.save(user);
         spotRepository3.save(bookedSpot);
+
         return reservation;
     }
 }
